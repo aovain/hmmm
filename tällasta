@@ -1,0 +1,109 @@
+7.
+
+def oikeat_vastaukset() -> list:
+    lista=[]
+    with open("laskut.csv") as tiedosto:
+        for rivi in tiedosto:
+            jako=rivi.strip().split("=")
+            luku=jako[0].split("+")
+            if int(luku[0])+int(luku[1]) == int(jako[1]):
+                lista.append(f"{luku[0]}+{luku[1]}={jako[1]}")
+    
+    return lista
+    
+    
+    
+9.
+
+def kirjoita_matriisi(riveja: int, sarakkeita: int, arvo: int):
+    lista=[]
+    laskuri=1
+    while laskuri <= sarakkeita:
+        lista.append(str(arvo))
+        laskuri+=1
+    mjono=",".join(lista)
+    laskuri=1
+    with open("matriisi.csv", "w") as t:
+        while laskuri <= riveja:
+            t.write(mjono+"\n")
+            laskuri+=1
+            
+
+10.
+
+def kirjoita_luvut(luvut:list, lukuja_riville: int):
+    laskuri=1
+    with open("luvut.csv", "w") as t:
+        for i in luvut:
+            if laskuri == len(luvut):
+                t.write(f"{i}")
+                
+            elif laskuri % lukuja_riville !=0:
+                t.write(f"{i},")
+                laskuri+=1
+                
+            elif laskuri % lukuja_riville == 0:
+                t.write(f"{i}\n")
+                laskuri+=1
+                
+12.
+
+lista = []
+while True:
+    try:
+        nimi=input("Nimi: ")
+        if nimi == "":
+            break
+        vuosi = int(input("Syntymävuosi: "))
+        if len(nimi)<=1:
+            print("Nimi on liian lyhyt!")
+        elif vuosi < 1800:
+            print("Olet liian vanha!")
+        elif vuosi >2021:
+            print("Et ole vielä syntynyt!")
+        else:
+            touple=(nimi,vuosi)
+            lista.append(touple)
+    except ValueError:
+        print("Vuosi pitää antaa numeroina!")
+    if nimi == "":
+        break
+print("Lista:",lista)
+
+
+13.
+
+try:
+    print("Funktio palautti luvun", mysteerifunktio())
+    
+except TypeError:
+    print("Tuli TypeError!")
+except ValueError:
+    print("Tuli ValueError!")
+except ZeroDivisionError:
+    print("Tuli ZeroDivisionError!")
+    
+    
+    
+15.
+
+def korjaa_ja_kopioi():
+    with open ("laskut.csv") as t1, open("korjatut_laskut.csv", "w") as t2:
+        sisalto=t1.readlines()
+        for i in sisalto:
+            lasku, tulos = i.split("=")
+            eka, toka=lasku.split("+")
+            eka=eka.strip()
+            toka=toka.strip()
+            tulos=tulos.strip()
+            if eka.isdigit()==False:
+                eka=int(tulos)-int(toka)
+                eka=str(eka)
+            elif toka.isdigit()==False:
+                toka=int(tulos)-int(eka)
+                toka=str(toka)
+            elif tulos.isdigit()==False:
+                tulos=int(eka)+int(toka)
+                tulos=str(tulos)
+            
+            t2.write(f"{eka}+{toka}={tulos}\n")    
